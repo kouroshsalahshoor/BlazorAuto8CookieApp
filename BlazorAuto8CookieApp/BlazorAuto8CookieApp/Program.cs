@@ -1,6 +1,8 @@
+using BlazorAuto8CookieApp.Auth;
 using BlazorAuto8CookieApp.Client.Pages;
 using BlazorAuto8CookieApp.Components;
 using BlazorAuto8CookieApp.Data;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +31,9 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -52,6 +57,8 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(BlazorAuto8CookieApp.Client._Imports).Assembly);
+
+app.MapLogoutEndpoint();
 
 using (var scope = app.Services.CreateScope())
 {

@@ -1,0 +1,20 @@
+﻿@page "/auth"
+
+@attribute [Authorize]
+@rendermode InteractiveAuto
+
+<PageTitle>Auth</PageTitle>
+
+<h3>Auth</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <h1 class="bg-success text-light">Welcome @context.User.Identity?.Name</h1>
+    </Authorized>
+    <NotAuthorized>
+        <h1 class="bg-danger text-light">Not Authorized</h1>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+
+}
