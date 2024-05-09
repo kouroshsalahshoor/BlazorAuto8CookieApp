@@ -1,0 +1,1 @@
+# BlazorAuto8CookieApp
