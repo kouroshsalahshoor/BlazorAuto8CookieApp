@@ -18,12 +18,26 @@ namespace BlazorAuto8CookieApp.Client.Auth
                 return;
             }
 
-            Claim[] claims = [
+            List<Claim> claims = [
                 new Claim(ClaimTypes.NameIdentifier, userInfo.Id!),
                 new Claim(ClaimTypes.Name, userInfo.UserName!),
                 new Claim(ClaimTypes.Email, userInfo.Email!),
-                new Claim("FirstName", userInfo.FirstName!),
-                new Claim("LastName", userInfo.LastName!) ];
+                new Claim("firstname", userInfo.FirstName!),
+                new Claim("lastname", userInfo.LastName!)
+                ];
+
+            //Claim[] claims = [
+            //    new Claim(ClaimTypes.NameIdentifier, userInfo.Id!),
+            //    new Claim(ClaimTypes.Name, userInfo.UserName!),
+            //    new Claim(ClaimTypes.Email, userInfo.Email!),
+            //    new Claim("firstname", userInfo.FirstName!),
+            //    new Claim("lastname", userInfo.LastName!) 
+            //    ];
+
+            foreach (var role in userInfo.Roles!)
+            {
+                claims.Add(new Claim("role", role));
+            }
 
             authenticationStateTask = Task.FromResult(
                 new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(claims,

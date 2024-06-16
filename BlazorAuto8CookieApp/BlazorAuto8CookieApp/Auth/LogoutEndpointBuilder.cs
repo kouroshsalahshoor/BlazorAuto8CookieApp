@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace BlazorAuto8CookieApp.Auth
 {
-    internal static class LogoutEndpointRouteBuilder
+    internal static class LogoutEndpointBuilder
     {
         public static IEndpointConventionBuilder MapLogoutEndpoint(this IEndpointRouteBuilder endpoints)
         {

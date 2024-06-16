@@ -1,7 +1,10 @@
 ﻿@page "/auth"
+@using System.Security.Claims
 
 @attribute [Authorize]
 @rendermode InteractiveAuto
+
+@inject AuthenticationStateProvider _authenticationStateProvider
 
 <PageTitle>Auth</PageTitle>
 
@@ -10,11 +13,25 @@
 <AuthorizeView>
     <Authorized>
         <h1 class="bg-success text-light">Welcome @context.User.Identity?.Name</h1>
+
+        <h3>Claims:</h3>
+        <ul>
+        @foreach (var item in _claims)
+        {
+            <li>@item.Type @item.Value</li>
+        }
+        </ul>
     </Authorized>
     <NotAuthorized>
         <h1 class="bg-danger text-light">Not Authorized</h1>
     </NotAuthorized>
 </AuthorizeView>
 @code {
+    private List<Claim>? _claims = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        _claims = authenticationState.User.Claims.ToList();
+    }
 }
